@@ -1,0 +1,1 @@
+utils::globalVariables(c('xab','emin.e10','emax.e20','emin.e11','emax.e21','emin.e12','emax.e22','fit','aes','geom_ribbon','scale_fill_gradient','geom_point','geom_line','xlab','ylab','theme_bw','theme','element_blank','element_text'))

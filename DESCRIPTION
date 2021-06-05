@@ -1,0 +1,24 @@
+Package: IRON
+Title: Quantile Regression for positive data using a general class of distributions
+Version: 1.1
+Date: 2021-06-05
+Authors@R: 
+    c(person(given = "Manoel",
+           family = "Santos-Neto",
+           role = c("aut", "cre"),
+           email = "manoel.ferreira@professor.ufcg.edu.br",
+           comment = c(ORCID = "0000-0002-9007-0680")),
+      person(given = "Diego",
+           family = "I. Gallardo",
+           role = c("aut"),
+           email = "diego.gallardo.mateluna@gmail.com",
+           comment = c(ORCID = "0000-0001-8184-7403"))
+           )
+Description: Quantile Regression for modeling IRON-distributed dependent variables. 
+Depends: R (>= 3.1.2), maxLik, gamlss, ggplot2
+Imports: VGAM
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
