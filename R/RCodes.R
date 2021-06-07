@@ -16,7 +16,7 @@
 #'@param df degrees of freedom.
 #'@param kappa shape parameter.
 #'@param log,log.p logical; if TRUE, the log-density or log(p) is used.  
-#'@param ... additional arguments.
+#'@param ... additional arguments to be passed.
 #'
 #'@details The density function of the IRON distribution is
 #'
@@ -126,32 +126,32 @@ riron <- function(n, shape, scale, tau, dist = "normal", df = 4, kappa = NULL, .
 
 #'@name fit
 #'
-#'@title xx
+#'@title Fitting Quantile Regression Models
 #'
-#'@description XX
+#'@description quant_reg is used to fit quantile regression models, specified by giving a symbolic description of the linear predictor and a description of the kernel.
 #'
 #'@aliases quant_reg
 #'
-#'@param formula x
-#'@param link x
-#'@param family x
-#'@param tau x
-#'@param data x
-#'@param out.list x
-#'@param estimate.df x
-#'@param df x
-#'@param model x
-#'@param npoints x
-#'@param plot x
-#'@param cex x
-#'@param k x
-#'@param color x
-#'@param xlabel x
-#'@param ylabel x
-#'@param font x
-#'@param cex.axis x
-#'@param cex.lab x
-#'@param ... x
+#'@param formula an object of class "formula".
+#'@param link link function to be used in the model.
+#'@param family a description of the kernel.
+#'@param tau quantile.
+#'@param data an optional data frame containing the variables of the model.
+#'@param out.list logical.
+#'@param estimate.df logical.
+#'@param df degrees of freedom.
+#'@param model object of class iron.
+#'@param npoints number of points to be identified.
+#'@param plot logical. 
+#'@param cex a numerical vector giving the amount by which plotting characters and symbols should be scaled relative to the default.
+#'@param k number of replications for envelope construction. 
+#'@param color a specification for the default envelope color.
+#'@param xlabel a label for the x axis.
+#'@param ylabel a label for the y axis.
+#'@param font the name of a font family for x and y axis.
+#'@param cex.axis The magnification to be used for axis annotation relative to the current setting of cex.
+#'@param cex.lab The magnification to be used for x and y labels relative to the current setting of cex.
+#'@param ... additional arguments to be passed.
 #'
 #'
 #'@examples
