@@ -8,18 +8,18 @@
 \alias{riron}
 \title{The IRON distribution.}
 \usage{
-diron(x, dist = "norm", tau, shape, scale, kappa = NULL, log = FALSE, ...)
+diron(x, family = "norm", tau, shape, scale, kappa = NULL, log = FALSE, ...)
 
-qiron(p, shape, scale, tau, dist = "norm", ...)
+qiron(p, shape, scale, tau, family = "norm", ...)
 
-piron(q, shape, scale, tau, dist = "norm", log.p = FALSE, ...)
+piron(q, shape, scale, tau, family = "norm", log.p = FALSE, ...)
 
-riron(n, shape, scale, tau, dist = "normal", df = 4, kappa = NULL, ...)
+riron(n, shape, scale, tau, family = "normal", df = 4, kappa = NULL, ...)
 }
 \arguments{
 \item{x, q}{vetor of quantiles.}
 
-\item{dist}{kernel used.}
+\item{family}{kernel used.}
 
 \item{tau}{quantile value.}
 

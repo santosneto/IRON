@@ -9,7 +9,7 @@
 #'@param x,q vetor of quantiles.
 #'@param p vector of probabilities.
 #'@param n number of observations.
-#'@param dist kernel used.
+#'@param family kernel used.
 #'@param tau quantile value.
 #'@param shape shape parameter.
 #'@param scale scale parameter.
@@ -38,15 +38,15 @@
 #' @importFrom stats pgamma 
 #'@import gamlss
 
-diron <- function(x, dist = "norm", tau, shape, scale, kappa = NULL, log = FALSE, ...){
-  g <- get(paste("d", dist, sep = ""), mode = "function")
-  G <- get(paste("p", dist, sep = ""), mode = "function")
+diron <- function(x, family = "norm", tau, shape, scale, kappa = NULL, log = FALSE, ...){
+  g <- get(paste("d", family, sep = ""), mode = "function")
+  G <- get(paste("p", family, sep = ""), mode = "function")
   
   a   <- -log(tau)/log(2)
   a.x <- (1.0/shape) * (sqrt(x/scale) - sqrt(scale/x))
   #A.x <- x^(-3/2) * (x + scale)/(2 * shape * sqrt(scale))
   
-  if (dist != 'PE2') {
+  if (family != 'PE2') {
     log.f <- log(a) + g(x = a.x, log = TRUE, ...) + (a - 1)*G(q = a.x, log.p = TRUE, ...) - (3/2) * log(x) + log(x + scale) - log(2) - log(shape) - (1/2) * log(scale) 
   } else{
     term1 <- 0.5
@@ -63,8 +63,8 @@ diron <- function(x, dist = "norm", tau, shape, scale, kappa = NULL, log = FALSE
 #'@aliases qiron
 #'
 #'@export
-qiron <- function(p, shape, scale, tau, dist = "norm", ...){ 
-  Q <- get(paste("q", dist, sep = ""), mode = "function")
+qiron <- function(p, shape, scale, tau, family = "norm", ...){ 
+  Q <- get(paste("q", family, sep = ""), mode = "function")
   a   <- -log(tau)/log(2)
   p.new <- p^(1/a) 
   z.p <- Q(p = p.new, ...)
@@ -79,8 +79,8 @@ qiron <- function(p, shape, scale, tau, dist = "norm", ...){
 #'@aliases piron
 #'
 #'@export
-piron <- function(q, shape, scale, tau, dist = "norm", log.p = FALSE, ...){ 
-  CDF <- get(paste("p", dist, sep = ""), mode = "function")
+piron <- function(q, shape, scale, tau, family = "norm", log.p = FALSE, ...){ 
+  CDF <- get(paste("p", family, sep = ""), mode = "function")
   a   <- -log(tau)/log(2)
   a.q <- (1.0/shape) * (sqrt(q/scale) - sqrt(scale/q))
   cdf <- CDF(a.q, log.p = log.p, ...)^a
@@ -99,25 +99,25 @@ piron <- function(q, shape, scale, tau, dist = "norm", log.p = FALSE, ...){
 #'@importFrom stats runif
 #'@import gamlss
 
-riron <- function(n, shape, scale, tau, dist = "normal", df = 4, kappa = NULL, ...)
+riron <- function(n, shape, scale, tau, family = "normal", df = 4, kappa = NULL, ...)
 {
   
   unif_number <- runif(n)
   
-  if (dist == 'normal') {
+  if (family == 'normal') {
     qexpbs_norm <- qiron
     prn <- qexpbs_norm(p = unif_number, shape = shape, scale = scale, tau = tau)
-  }else if (dist == 't') {
-    qexpbs_t <- function(p, ...) qiron(p, dist = 't', df = df, ...)
+  }else if (family == 't') {
+    qexpbs_t <- function(p, ...) qiron(p, family = 't', df = df, ...)
     prn <- qexpbs_t(p = unif_number, shape = shape, scale = scale, tau = tau)
-  }else if (dist == 'pe') {
-    qexpbs_pe <- function(p, ...) qiron(p, dist = 'PE2', ...)
+  }else if (family == 'pe') {
+    qexpbs_pe <- function(p, ...) qiron(p, family = 'PE2', ...)
     prn <- qexpbs_pe(p = unif_number, shape = shape, scale = scale, nu = kappa, tau = tau)
-  }else if (dist == 'cauchy') {
-    qexpbs_ca <- function(p, ...) qiron(p, dist = 't', df = 1, ...)
+  }else if (family == 'cauchy') {
+    qexpbs_ca <- function(p, ...) qiron(p, family = 't', df = 1, ...)
     prn <- qexpbs_ca(p = unif_number, shape = shape, scale = scale, tau = tau)
   } else{
-    qexpbs_logis <- function(p, ...) qiron(p, dist = 'logis', ...)
+    qexpbs_logis <- function(p, ...) qiron(p, family = 'logis', ...)
     prn <- qexpbs_logis(p = unif_number, shape = shape, scale = scale, tau = tau)
   }
   
@@ -224,7 +224,7 @@ quant_reg <- function(formula, link = 'identity', family = 'normal', tau = 0.5, 
     
     if (estimate.df == FALSE) {
       df.t <- df
-      pdf_expbs_t <- function(x, ...) diron(x = x, dist = 't', df = df.t, ...) 
+      pdf_expbs_t <- function(x, ...) diron(x = x, family = 't', df = df.t, ...) 
       
       log_lik <- function(par, y, x, tau, link){
         linkstr   <- link
@@ -240,7 +240,7 @@ quant_reg <- function(formula, link = 'identity', family = 'normal', tau = 0.5, 
       start_par <- c(shape = shape_start, beta_start)
       
     } else{
-      pdf_expbs_t <- function(x, ...) diron(x = x, dist = 't', ...)  
+      pdf_expbs_t <- function(x, ...) diron(x = x, family = 't', ...)  
       
       log_lik <- function(par, y, x, tau, link){
         linkstr   <- link
@@ -264,7 +264,7 @@ quant_reg <- function(formula, link = 'identity', family = 'normal', tau = 0.5, 
     
   } else if (family == 'cauchy') {
     
-    pdf_expbs_ca <- function(x, ...) diron(x = x, dist = 't', df = 1, ...)
+    pdf_expbs_ca <- function(x, ...) diron(x = x, family = 't', df = 1, ...)
     
     log_lik <- function(par, y, x, tau, link){
       linkstr   <- link
@@ -287,7 +287,7 @@ quant_reg <- function(formula, link = 'identity', family = 'normal', tau = 0.5, 
     
   } else if (family == 'pe') {
     
-    pdf_expbs_pe <- function(x, ...) diron(x = x, dist = 'PE2', ...)
+    pdf_expbs_pe <- function(x, ...) diron(x = x, family = 'PE2', ...)
     
     log_lik <- function(par, y, x, tau, link){
       linkstr   <- link
@@ -322,7 +322,7 @@ quant_reg <- function(formula, link = 'identity', family = 'normal', tau = 0.5, 
   }  else{
     
     
-    pdf_expbs_logis <- function(x, ...) diron(x = x, dist = 'logis', ...)
+    pdf_expbs_logis <- function(x, ...) diron(x = x, family = 'logis', ...)
     
     log_lik <- function(par, y, x, tau, link){
       linkstr   <- link
@@ -397,20 +397,20 @@ res_quant <- function(model){
     prob <- pexpbs_norm(q = y, shape = shape_est, scale = scale_est, tau = tau)
   } else if (model$family == 't') {
     if (model$est.df == FALSE) {
-      pexpbs_t <- function(q, ...) piron(q, dist = 't', df = df_value, ...)
+      pexpbs_t <- function(q, ...) piron(q, family = 't', df = df_value, ...)
       prob <- pexpbs_t(q = y, shape = shape_est, scale = scale_est, tau = tau)
     } else{
-      pexpbs_t <- function(q, ...) piron(q, dist = 't', ...)
+      pexpbs_t <- function(q, ...) piron(q, family = 't', ...)
       prob <- pexpbs_t(q = y, shape = shape_est, scale = scale_est, tau = tau, df = df_est)
     }
   } else if (model$family == 'pe') {
-    pexpbs_pe <- function(q, ...) piron(q, dist = 'PE2', ...)
+    pexpbs_pe <- function(q, ...) piron(q, family = 'PE2', ...)
     prob <- pexpbs_pe(q = y, shape = shape_est, scale = scale_est, nu = kappa_est, tau = tau)
   } else if (model$family == 'cauchy') {
-    pexpbs_ca <- function(q, ...) piron(q, dist = 't', df = 1, ...)
+    pexpbs_ca <- function(q, ...) piron(q, family = 't', df = 1, ...)
     prob <- pexpbs_ca(q = y, shape = shape_est, scale = scale_est, tau = tau)
   } else{
-    pexpbs_logis <- function(q, ...) piron(q, dist = 'logis', ...)
+    pexpbs_logis <- function(q, ...) piron(q, family = 'logis', ...)
     prob <- pexpbs_logis(q = y, shape = shape_est, scale = scale_est, tau = tau)
   }
   
