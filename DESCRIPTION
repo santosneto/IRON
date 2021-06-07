@@ -1,6 +1,6 @@
 Package: IRON
 Title: Quantile Regression for positive data using a general class of distributions
-Version: 1.1
+Version: 1.2
 Date: 2021-06-05
 Authors@R: 
     c(person(given = "Manoel",

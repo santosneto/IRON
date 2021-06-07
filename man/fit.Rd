@@ -83,11 +83,8 @@ quant_reg is used to fit quantile regression models, specified by giving a symbo
 
 set.seed(2)
 y <- VGAM::rbisa(100, shape = 4, scale = 1)
-quant_reg(y ~ 1, link = 'log', family = 'normal', tau = 0.9)
-quant_reg(y ~ 1, link = 'log', family = 'pe', tau = 0.5)
-quant_reg(y ~ 1, link = 'log', family = 't', tau = 0.5)
-quant_reg(y ~ 1, link = 'log', family = 'logis', tau = 0.5)
-quant_reg(y ~ 1, link = 'log', family = 'pe', tau = 0.2)
-quant_reg(y ~ 1, link = 'log', family = 't', tau = 0.8)
-
+fit <- quant_reg(y ~ 1, link = 'log', family = 'normal', tau = 0.5, out.list = TRUE)
+envelope(fit)
+cooks_dist(fit,data = data.frame(y = y, x = 1), plot = TRUE)
+plot(res_quant(fit))
 }
