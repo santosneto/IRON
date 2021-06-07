@@ -6,7 +6,7 @@
 \alias{res_quant}
 \alias{cooks_dist}
 \alias{envelope}
-\title{xx}
+\title{Fitting Quantile Regression Models}
 \usage{
 quant_reg(
   formula,
@@ -36,48 +36,48 @@ envelope(
 )
 }
 \arguments{
-\item{formula}{x}
+\item{formula}{an object of class "formula".}
 
-\item{link}{x}
+\item{link}{link function to be used in the model.}
 
-\item{family}{x}
+\item{family}{a description of the kernel.}
 
-\item{tau}{x}
+\item{tau}{quantile.}
 
-\item{data}{x}
+\item{data}{an optional data frame containing the variables of the model.}
 
-\item{out.list}{x}
+\item{out.list}{logical.}
 
-\item{estimate.df}{x}
+\item{estimate.df}{logical.}
 
-\item{df}{x}
+\item{df}{degrees of freedom.}
 
-\item{...}{x}
+\item{...}{additional arguments to be passed.}
 
-\item{model}{x}
+\item{model}{object of class iron.}
 
-\item{npoints}{x}
+\item{npoints}{number of points to be identified.}
 
-\item{plot}{x}
+\item{plot}{logical.}
 
-\item{cex}{x}
+\item{cex}{a numerical vector giving the amount by which plotting characters and symbols should be scaled relative to the default.}
 
-\item{k}{x}
+\item{k}{number of replications for envelope construction.}
 
-\item{color}{x}
+\item{color}{a specification for the default envelope color.}
 
-\item{xlabel}{x}
+\item{xlabel}{a label for the x axis.}
 
-\item{ylabel}{x}
+\item{ylabel}{a label for the y axis.}
 
-\item{font}{x}
+\item{font}{the name of a font family for x and y axis.}
 
-\item{cex.axis}{x}
+\item{cex.axis}{The magnification to be used for axis annotation relative to the current setting of cex.}
 
-\item{cex.lab}{x}
+\item{cex.lab}{The magnification to be used for x and y labels relative to the current setting of cex.}
 }
 \description{
-XX
+quant_reg is used to fit quantile regression models, specified by giving a symbolic description of the linear predictor and a description of the kernel.
 }
 \examples{
 

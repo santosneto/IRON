@@ -31,7 +31,7 @@ riron(n, shape, scale, tau, dist = "normal", df = 4, kappa = NULL, ...)
 
 \item{log, log.p}{logical; if TRUE, the log-density or log(p) is used.}
 
-\item{...}{additional arguments.}
+\item{...}{additional arguments to be passed.}
 
 \item{p}{vector of probabilities.}
 
